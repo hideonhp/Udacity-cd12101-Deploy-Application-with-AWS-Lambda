@@ -42,25 +42,31 @@ export async function handler(event) {
   }
 }
 
+// Function to verify JWT token
 async function verifyToken(authHeader) {
-  const token = getToken(authHeader)
-  const jwt = jsonwebtoken.decode(token, { complete: true })
+  // Extracting token from authorization header
+  const token = getToken(authHeader);
+  // Decoding JWT token to get header information
+  const jwt = jsonwebtoken.decode(token, { complete: true });
 
-  const { data: jwks } = await Axios.get(jwksUrl)
-  const keys = jwks.keys
+  // Getting JSON Web Key Set (JWKS) from JWKS URL
+  const { data: jwks } = await Axios.get(jwksUrl);
+  const keys = jwks.keys;
 
-  const cert = keys.find(key => key.kid === jwt.header.kid).x5c[0]
-  const pem = cert.match(/.{1,64}/g).join('\n')
+  // Finding the correct certificate based on key ID (kid) from JWT header
+  const cert = keys.find(key => key.kid === jwt.header.kid).x5c[0];
+  const pem = cert.match(/.{1,64}/g).join('\n');
 
+  // Verifying token signature using PEM-encoded certificate
   return new Promise((resolve, reject) => {
     jsonwebtoken.verify(token, pem, { algorithms: ['RS256'] }, (err, decodedToken) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(decodedToken)
+        resolve(decodedToken);
       }
-    })
-  })
+    });
+  });
 }
 
 function getToken(authHeader) {
