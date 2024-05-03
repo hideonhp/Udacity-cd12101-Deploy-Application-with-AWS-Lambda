@@ -22,13 +22,12 @@
     "axios": "^1.6.8",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.5",
+    "serverless-aws-documentation": "^1.1.0",
     "serverless-iam-roles-per-function": "^3.2.0",
+    "serverless-plugin-tracing": "^2.0.0",
+    "serverless-reqvalidator-plugin": "^3.1.0",
     "uuid": "^9.0.1",
     "winston": "^3.13.0"
-  },
-  "devDependencies": {
-    "serverless-aws-documentation": "^1.1.0",
-    "serverless-plugin-tracing": "^2.0.0",
-    "serverless-reqvalidator-plugin": "^3.1.0"
   }
 }
