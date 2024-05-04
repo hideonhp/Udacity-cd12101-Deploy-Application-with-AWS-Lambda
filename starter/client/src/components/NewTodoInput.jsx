@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { Divider, Grid, Input } from 'semantic-ui-react'
 import { createTodo } from '../api/todos-api'
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN
+
 export function NewTodoInput({ onNewTodo }) {
   const [newTodoName, setNewTodoName] = useState('')
 
@@ -12,7 +14,7 @@ export function NewTodoInput({ onNewTodo }) {
   const onTodoCreate = async (event) => {
     try {
       const accessToken = await getAccessTokenSilently({
-        audience: `https://dev-s4ekzwe3wl6g1qm2.auth0.com/api/v2/`,
+        audience: `https://${domain}/api/v2/`,
         scope: 'write:todos'
       })
       const dueDate = calculateDueDate()

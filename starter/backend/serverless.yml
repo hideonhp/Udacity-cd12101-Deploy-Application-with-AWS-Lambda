@@ -13,6 +13,11 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs16.x
+  lambdaHashingVersion: '20201221'
+
+  tracing:
+    lambda: true
+    apiGateway: true
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -20,7 +25,7 @@ provider:
   environment:
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
-    TW_S3_BUCKET: thaiwhere20231216-${self:provider.stage}
+    TW_S3_BUCKET: hideonhp-nd9990-project04-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
 custom:
@@ -28,13 +33,16 @@ custom:
     api:
       info:
         version: v1.0.0
-        title: Udagram API
+        title: Todo APIs
         description: Serverless application for todos
 
     models:
       - name: CreateTodoRequest
         contentType: application/json
-        schema: ${file(models/create-todo-request.json)}
+        schema: ${file(models/create-todo-model.json)}
+      - name: UpdateTodoRequest
+        contentType: application/json
+        schema: ${file(models/update-todo-model.json)}  
       
 functions:
 
